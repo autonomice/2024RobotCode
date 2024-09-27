@@ -12,6 +12,7 @@ public class Teleop extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         Robot bot = new Robot(hardwareMap);
+        bot.baseInit();
         bot.teleopInit(new Props.TeleopProps(gamepad1, gamepad2));
 
         waitForStart();
@@ -19,7 +20,5 @@ public class Teleop extends LinearOpMode {
         while (!isStopRequested() && opModeIsActive()) {
             bot.run();
         }
-
-        bot.reset();
     }
 }
