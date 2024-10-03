@@ -11,7 +11,7 @@ import github.autonomice.Robot;
 public class Teleop extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
-        Robot bot = new Robot(hardwareMap);
+        Robot bot = new Robot(hardwareMap, telemetry);
         bot.baseInit();
         bot.teleopInit(new Props.TeleopProps(gamepad1, gamepad2));
 
