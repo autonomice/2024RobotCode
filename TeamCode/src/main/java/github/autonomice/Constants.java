@@ -18,4 +18,8 @@ public class Constants {
                     RevHubOrientationOnRobot.UsbFacingDirection.RIGHT)); // TODO: adjust
     public static GamepadKeys.Button IMUPoseResetButton = GamepadKeys.Button.START,
         DriveBaseModeSwitchButton = GamepadKeys.Button.Y;
+
+    public static String IntakeKey = "intake";
+    public static GamepadKeys.Trigger IntakeIn = GamepadKeys.Trigger.RIGHT_TRIGGER,
+        IntakeOut = GamepadKeys.Trigger.LEFT_TRIGGER;
 }

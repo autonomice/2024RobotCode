@@ -9,12 +9,14 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import github.autonomice.subsystems.AprilTagDetector;
 import github.autonomice.subsystems.ColorSensor;
 import github.autonomice.subsystems.Drivetrain;
+import github.autonomice.subsystems.Intake;
 import github.autonomice.util.BulkReader;
 import github.autonomice.util.ImuHandler;
 
 public class Robot extends com.arcrobotics.ftclib.command.Robot {
     // subsystems
     public final Drivetrain mDriveTrain;
+    public final Intake mIntake;
     public final ColorSensor mColorSensor;
     public final AprilTagDetector mDetector;
     // not subsystem
@@ -24,6 +26,7 @@ public class Robot extends com.arcrobotics.ftclib.command.Robot {
 
     public Robot(HardwareMap hwMap, Telemetry telemetry) {
         this.mDriveTrain = new Drivetrain(hwMap);
+        this.mIntake = new Intake(hwMap);
         this.mColorSensor = new ColorSensor(hwMap);
         this.mDetector = new AprilTagDetector(hwMap);
 
@@ -39,7 +42,10 @@ public class Robot extends com.arcrobotics.ftclib.command.Robot {
 
     public void teleopInit(Props.TeleopProps props) {
         mDriveTrain.setDefaultCommand(
-                new Drivetrain.DefaultDriveCommand(this.mDriveTrain, props.gamepad1, this.mImu)
+                new Drivetrain.DefaultCommand(this.mDriveTrain, props.gamepad1, this.mImu)
+        );
+        mIntake.setDefaultCommand(
+                new Intake.DefaultCommand(this.mIntake, props.gamepad1)
         );
         mColorSensor.setDefaultCommand(
                 new ColorSensor.DefaultCommand(this.mColorSensor, telemetry)

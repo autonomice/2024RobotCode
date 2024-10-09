@@ -35,12 +35,12 @@ public class Drivetrain extends SubsystemBase {
         }
     }
 
-    public static class DefaultDriveCommand extends CommandBase {
+    public static class DefaultCommand extends CommandBase {
         private final Drivetrain mDriveTrain;
         private final GamepadEx mGamePad;
         private final ImuHandler mImu;
 
-        public DefaultDriveCommand(Drivetrain driveTrain, GamepadEx gamepad, ImuHandler imu) {
+        public DefaultCommand(Drivetrain driveTrain, GamepadEx gamepad, ImuHandler imu) {
             this.mDriveTrain = driveTrain;
             this.mGamePad = gamepad;
             this.mImu = imu;
