@@ -22,4 +22,6 @@ public class Constants {
     public static String IntakeKey = "intake";
     public static GamepadKeys.Trigger IntakeIn = GamepadKeys.Trigger.RIGHT_TRIGGER,
         IntakeOut = GamepadKeys.Trigger.LEFT_TRIGGER;
+
+    public static String ArmKey = "arm";
 }
