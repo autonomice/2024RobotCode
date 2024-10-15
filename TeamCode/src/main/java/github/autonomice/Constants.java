@@ -20,6 +20,7 @@ public class Constants {
         DriveBaseModeSwitchButton = GamepadKeys.Button.Y;
 
     public static String IntakeKey = "intake";
+    public static String ArmKey = "arm";
     public static GamepadKeys.Trigger IntakeIn = GamepadKeys.Trigger.RIGHT_TRIGGER,
         IntakeOut = GamepadKeys.Trigger.LEFT_TRIGGER;
 
