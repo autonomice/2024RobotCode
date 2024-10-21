@@ -19,9 +19,9 @@ public class ArmTest extends SubsystemBase {
         this.armMotor.setPower(power);
     }
 
-    public class DefaultCommand extends CommandBase {
-        private ArmTest arm;
-        private GamepadEx padInput;
+    public static class DefaultCommand extends CommandBase {
+        private final ArmTest arm;
+        private final GamepadEx padInput;
 
         public DefaultCommand(ArmTest arm, GamepadEx padInput) {
             this.arm = arm;
