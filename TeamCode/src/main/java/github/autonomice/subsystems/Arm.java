@@ -10,12 +10,22 @@ import github.autonomice.Constants;
 
 public class Arm extends SubsystemBase {
     public final DcMotor mMotor;
+    public float currentPos = 0;
 
     public Arm(HardwareMap hwMap) {
         this.mMotor = hwMap.get(DcMotor.class, Constants.ArmKey);
+        this.mMotor.setTargetPosition(0);
         this.mMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        this.mMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        this.mMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        this.mMotor.setPower(0.5);
+        this.mMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    }
+
+    public void runUp() {
+        this.currentPos = Constants.ArmUpPos;
+    }
+
+    public void runDown() {
+        this.currentPos = Constants.ArmDownPos;
     }
 
     public static class DefaultCommand extends CommandBase {
@@ -31,7 +41,8 @@ public class Arm extends SubsystemBase {
 
         @Override
         public void execute() {
-            this.mArm.mMotor.setPower(this.mGamepad.getRightY());
+            this.mArm.currentPos += (float) this.mGamepad.getRightY();
+            this.mArm.mMotor.setTargetPosition((int) this.mArm.currentPos);
         }
     }
 }
