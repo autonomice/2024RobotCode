@@ -14,8 +14,8 @@ public class Constants {
     public static Drivetrain.DriveTrainCoefficients driveTrainCoefficients = new Drivetrain.DriveTrainCoefficients(1.0, 1.0, 1.0);
     public static IMU.Parameters imuParameters = new IMU.Parameters(
             new RevHubOrientationOnRobot(
-                    RevHubOrientationOnRobot.LogoFacingDirection.UP,
-                    RevHubOrientationOnRobot.UsbFacingDirection.RIGHT)); // TODO: adjust
+                    RevHubOrientationOnRobot.LogoFacingDirection.LEFT,
+                    RevHubOrientationOnRobot.UsbFacingDirection.BACKWARD)); // TODO: adjust
     public static GamepadKeys.Button IMUPoseResetButton = GamepadKeys.Button.START,
         DriveBaseModeSwitchButton = GamepadKeys.Button.Y;
 

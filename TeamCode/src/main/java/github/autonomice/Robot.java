@@ -6,7 +6,6 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
-import github.autonomice.subsystems.AprilTagDetector;
 import github.autonomice.subsystems.Arm;
 import github.autonomice.subsystems.ColorSensor;
 import github.autonomice.subsystems.Drivetrain;
@@ -15,12 +14,12 @@ import github.autonomice.util.BulkReader;
 import github.autonomice.util.ImuHandler;
 
 public class Robot extends com.arcrobotics.ftclib.command.Robot {
+    Props.AutoProps.AutoSide side;
     // subsystems
     public final Drivetrain mDriveTrain;
     public final Arm mArm;
     public final Intake mIntake;
     public final ColorSensor mColorSensor;
-    public final AprilTagDetector mDetector;
     // not subsystem
     private final BulkReader mBulkReader;
     private final ImuHandler mImu;
@@ -34,8 +33,6 @@ public class Robot extends com.arcrobotics.ftclib.command.Robot {
         this.mIntake = new Intake(hwMap);
         this.mColorSensor = new ColorSensor(hwMap);
 
-        this.mDetector = new AprilTagDetector(hwMap);
-
         this.mBulkReader = new BulkReader(hwMap);
         this.mImu = new ImuHandler(hwMap, Constants.imuParameters, 0.0);
 
@@ -43,7 +40,7 @@ public class Robot extends com.arcrobotics.ftclib.command.Robot {
     }
 
     public void baseInit() {
-        register(this.mDriveTrain, this.mArm, this.mIntake, this.mColorSensor, this.mDetector);
+        register(this.mDriveTrain, this.mArm, this.mIntake, this.mColorSensor);
     }
 
     public void teleopInit(Props.TeleopProps props) {
@@ -59,9 +56,6 @@ public class Robot extends com.arcrobotics.ftclib.command.Robot {
         mColorSensor.setDefaultCommand(
                 new ColorSensor.DefaultCommand(this.mColorSensor, telemetry)
         );
-        mDetector.setDefaultCommand(
-                new AprilTagDetector.DefaultCommand(this.mDetector, telemetry)
-        );
 
         props
                 .gamepad1
@@ -72,6 +66,16 @@ public class Robot extends com.arcrobotics.ftclib.command.Robot {
                 .gamepad1
                 .getGamepadButton(Constants.DriveBaseModeSwitchButton)
                 .whenReleased(new InstantCommand(mDriveTrain::switchDriveMode, mDriveTrain));
+    }
+
+    public void autoInit(Props.AutoProps props) {
+        this.side = props.side;
+    }
+
+    public void autoStart() {
+        this.mDriveTrain.setDefaultCommand(
+                new Drivetrain.DefaultAutoCommand(this.mDriveTrain)
+        );
     }
 
     @Override
