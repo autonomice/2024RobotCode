@@ -6,6 +6,7 @@ import com.arcrobotics.ftclib.drivebase.MecanumDrive;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import github.autonomice.Constants;
 import github.autonomice.util.ImuHandler;
@@ -32,6 +33,35 @@ public class Drivetrain extends SubsystemBase {
             case ROBOT:
                 this.orientation = DriveOrientation.FIELD;
                 break;
+        }
+    }
+
+    public static class DefaultAutoCommand extends CommandBase {
+        private final Drivetrain mDriveTrain;
+        private final ElapsedTime mTimer;
+
+        public DefaultAutoCommand(Drivetrain drivetrain) {
+            this.mDriveTrain = drivetrain;
+            this.mTimer = new ElapsedTime();
+
+            addRequirements(this.mDriveTrain);
+        }
+
+        @Override
+        public void execute() {
+            if (!this.isScheduled()) {
+                this.mTimer.reset();
+            }
+
+            if (this.mTimer.milliseconds() < 1100) {
+                this.mDriveTrain.mDriveBase.driveRobotCentric(
+                        0., -1., 0.
+                );
+            } else {
+                this.mDriveTrain.mDriveBase.driveRobotCentric(
+                        0., 0., 0.
+                );
+            }
         }
     }
 
