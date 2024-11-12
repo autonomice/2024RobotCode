@@ -55,7 +55,7 @@ public class Drivetrain extends SubsystemBase {
 
             if (this.mTimer.milliseconds() < 1100) {
                 this.mDriveTrain.mDriveBase.driveRobotCentric(
-                        0., -1., 0.
+                        0., 1., 0.
                 );
             } else {
                 this.mDriveTrain.mDriveBase.driveRobotCentric(

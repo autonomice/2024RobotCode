@@ -11,7 +11,7 @@ public class Constants {
             RightFrontKey = "right-front",
             LeftBackKey = "left back",
             RightBackKey = "right-back";
-    public static Drivetrain.DriveTrainCoefficients driveTrainCoefficients = new Drivetrain.DriveTrainCoefficients(1.0, 1.0, 1.0);
+    public static Drivetrain.DriveTrainCoefficients driveTrainCoefficients = new Drivetrain.DriveTrainCoefficients(1.0, -1.0, 1.0);
     public static IMU.Parameters imuParameters = new IMU.Parameters(
             new RevHubOrientationOnRobot(
                     RevHubOrientationOnRobot.LogoFacingDirection.LEFT,
