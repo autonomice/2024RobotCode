@@ -16,7 +16,8 @@ public class Arm extends SubsystemBase {
         this.mMotor = hwMap.get(DcMotor.class, Constants.ArmKey);
         this.mMotor.setTargetPosition(0);
         this.mMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        this.mMotor.setPower(0.5);
+        mMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        this.mMotor.setPower(0.);
         this.mMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
@@ -43,6 +44,11 @@ public class Arm extends SubsystemBase {
         public void execute() {
             this.mArm.currentPos += (float) this.mGamepad.getRightY();
             this.mArm.mMotor.setTargetPosition((int) this.mArm.currentPos);
+            if (Math.abs(this.mArm.mMotor.getCurrentPosition() - this.mArm.currentPos) < 8) {
+                this.mArm.mMotor.setPower(0.);
+            } else {
+                this.mArm.mMotor.setPower(0.8);
+            }
         }
     }
 }

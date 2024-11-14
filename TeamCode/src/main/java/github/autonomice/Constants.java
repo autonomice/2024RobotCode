@@ -24,7 +24,7 @@ public class Constants {
         IntakeOut = GamepadKeys.Trigger.LEFT_TRIGGER;
 
     public static String ArmKey = "arm";
-    public static int ArmUpPos = 90, ArmDownPos = 0;
+    public static int ArmUpPos = 360, ArmDownPos = 0;
     public static GamepadKeys.Button ArmUpButton = GamepadKeys.Button.Y,
         ArmDownButton = GamepadKeys.Button.A;
 }
