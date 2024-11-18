@@ -2,23 +2,34 @@ package github.autonomice.subsystems;
 
 import com.arcrobotics.ftclib.command.CommandBase;
 import com.arcrobotics.ftclib.command.SubsystemBase;
+import com.arcrobotics.ftclib.controller.PIDFController;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.Range;
 
 import github.autonomice.Constants;
 
 public class Arm extends SubsystemBase {
+
     public final DcMotor mMotor;
     public float currentPos = 0;
+    private final PIDFController pidController;
 
     public Arm(HardwareMap hwMap) {
         this.mMotor = hwMap.get(DcMotor.class, Constants.ArmKey);
-        this.mMotor.setTargetPosition(0);
         this.mMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        mMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        this.mMotor.setPower(0.);
-        this.mMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        this.mMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        this.mMotor.setPower(0.0);
+        this.mMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        this.pidController = new PIDFController(
+                Constants.ARM_KP,
+                Constants.ARM_KI,
+                Constants.ARM_KD,
+                0
+        );
+        this.pidController.setTolerance(Constants.ARM_TOLERANCE);
     }
 
     public void runUp() {
@@ -43,12 +54,16 @@ public class Arm extends SubsystemBase {
         @Override
         public void execute() {
             this.mArm.currentPos += (float) this.mGamepad.getRightY();
-            this.mArm.mMotor.setTargetPosition((int) this.mArm.currentPos);
-            if (Math.abs(this.mArm.mMotor.getCurrentPosition() - this.mArm.currentPos) < 8) {
-                this.mArm.mMotor.setPower(0.);
-            } else {
-                this.mArm.mMotor.setPower(0.8);
-            }
+
+            this.mArm.pidController.setSetPoint(this.mArm.currentPos);
+
+            double pidOutput = this.mArm.pidController.calculate(
+                    this.mArm.mMotor.getCurrentPosition()
+            );
+
+            pidOutput = Range.clip(pidOutput, -1.0, 1.0);
+
+            this.mArm.mMotor.setPower(pidOutput);
         }
     }
 }

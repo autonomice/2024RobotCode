@@ -25,6 +25,8 @@ public class Constants {
 
     public static String ArmKey = "arm";
     public static int ArmUpPos = 360, ArmDownPos = 0;
+    public static final double ARM_KP = 0.008,
+        ARM_KI = 0.004, ARM_KD = 0.00015, ARM_TOLERANCE = 5;
     public static GamepadKeys.Button ArmUpButton = GamepadKeys.Button.Y,
         ArmDownButton = GamepadKeys.Button.A;
 }
