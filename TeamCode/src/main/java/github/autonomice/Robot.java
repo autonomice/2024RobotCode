@@ -59,6 +59,16 @@ public class Robot extends com.arcrobotics.ftclib.command.Robot {
 
         props
                 .gamepad1
+                .getGamepadButton(Constants.ArmUpButton)
+                .whenReleased(new InstantCommand(mArm::runUp, mArm));
+
+        props
+                .gamepad1
+                .getGamepadButton(Constants.ArmDownButton)
+                .whenReleased(new InstantCommand(mArm::runDown, mArm));
+
+        props
+                .gamepad1
                 .getGamepadButton(Constants.IMUPoseResetButton)
                 .whenReleased(new InstantCommand(mImu::reset));
 
