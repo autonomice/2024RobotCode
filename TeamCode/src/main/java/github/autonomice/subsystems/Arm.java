@@ -53,7 +53,7 @@ public class Arm extends SubsystemBase {
 
         @Override
         public void execute() {
-            this.mArm.currentPos += (float) this.mGamepad.getRightY();
+            this.mArm.currentPos += (float) (-2 * this.mGamepad.getRightY());
 
             this.mArm.pidController.setSetPoint(this.mArm.currentPos);
 

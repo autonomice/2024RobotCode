@@ -29,9 +29,9 @@ public class Intake extends SubsystemBase {
         @Override
         public void execute() {
             if (mGamepad.getTrigger(Constants.IntakeIn) != 0) {
-                this.mIntake.mMotor.setPower(1.0);
+                this.mIntake.mMotor.setPower(0.7);
             } else if (mGamepad.getTrigger(Constants.IntakeOut) != 0) {
-                this.mIntake.mMotor.setPower(-1.0);
+                this.mIntake.mMotor.setPower(-0.7);
             } else {
                 this.mIntake.mMotor.setPower(0.0);
             }
