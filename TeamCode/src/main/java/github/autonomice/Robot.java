@@ -7,7 +7,6 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 import github.autonomice.subsystems.Arm;
-import github.autonomice.subsystems.ColorSensor;
 import github.autonomice.subsystems.Drivetrain;
 import github.autonomice.subsystems.Intake;
 import github.autonomice.util.BulkReader;
@@ -19,7 +18,6 @@ public class Robot extends com.arcrobotics.ftclib.command.Robot {
     public final Drivetrain mDriveTrain;
     public final Arm mArm;
     public final Intake mIntake;
-    public final ColorSensor mColorSensor;
     // not subsystem
     private final BulkReader mBulkReader;
     private final ImuHandler mImu;
@@ -31,7 +29,6 @@ public class Robot extends com.arcrobotics.ftclib.command.Robot {
         this.mArm = new Arm(hwMap);
 
         this.mIntake = new Intake(hwMap);
-        this.mColorSensor = new ColorSensor(hwMap);
 
         this.mBulkReader = new BulkReader(hwMap);
         this.mImu = new ImuHandler(hwMap, Constants.imuParameters, 0.0);
@@ -40,7 +37,7 @@ public class Robot extends com.arcrobotics.ftclib.command.Robot {
     }
 
     public void baseInit() {
-        register(this.mDriveTrain, this.mArm, this.mIntake, this.mColorSensor);
+        register(this.mDriveTrain, this.mArm, this.mIntake);
     }
 
     public void teleopInit(Props.TeleopProps props) {
@@ -48,22 +45,19 @@ public class Robot extends com.arcrobotics.ftclib.command.Robot {
                 new Drivetrain.DefaultCommand(this.mDriveTrain, props.gamepad1, this.mImu)
         );
         mArm.setDefaultCommand(
-                new Arm.DefaultCommand(this.mArm, props.gamepad1)
+                new Arm.DefaultCommand(this.mArm, props.gamepad2)
         );
         mIntake.setDefaultCommand(
-                new Intake.DefaultCommand(this.mIntake, props.gamepad1)
-        );
-        mColorSensor.setDefaultCommand(
-                new ColorSensor.DefaultCommand(this.mColorSensor, telemetry)
+                new Intake.DefaultCommand(this.mIntake, props.gamepad2)
         );
 
         props
-                .gamepad1
+                .gamepad2
                 .getGamepadButton(Constants.ArmUpButton)
                 .whenReleased(new InstantCommand(mArm::runUp, mArm));
 
         props
-                .gamepad1
+                .gamepad2
                 .getGamepadButton(Constants.ArmDownButton)
                 .whenReleased(new InstantCommand(mArm::runDown, mArm));
 
