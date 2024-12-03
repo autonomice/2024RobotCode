@@ -13,7 +13,7 @@ import github.autonomice.util.ImuHandler;
 
 public class Drivetrain extends SubsystemBase {
     public final MecanumDrive mDriveBase;
-    public DriveOrientation orientation = DriveOrientation.FIELD;
+    public DriveOrientation orientation = DriveOrientation.ROBOT;
     public DriveTrainCoefficients coefficients = Constants.driveTrainCoefficients;
 
 

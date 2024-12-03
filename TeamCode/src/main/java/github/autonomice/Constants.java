@@ -11,10 +11,10 @@ public class Constants {
             RightFrontKey = "right-front",
             LeftBackKey = "left back",
             RightBackKey = "right-back";
-    public static Drivetrain.DriveTrainCoefficients driveTrainCoefficients = new Drivetrain.DriveTrainCoefficients(1.0, -1.0, 0.5);
+    public static Drivetrain.DriveTrainCoefficients driveTrainCoefficients = new Drivetrain.DriveTrainCoefficients(-1.0, -1.0, -0.5);
     public static IMU.Parameters imuParameters = new IMU.Parameters(
             new RevHubOrientationOnRobot(
-                    RevHubOrientationOnRobot.LogoFacingDirection.BACKWARD,
+                    RevHubOrientationOnRobot.LogoFacingDirection.LEFT,
                     RevHubOrientationOnRobot.UsbFacingDirection.UP)); // TODO: adjust
     public static GamepadKeys.Button IMUPoseResetButton = GamepadKeys.Button.START,
         DriveBaseModeSwitchButton = GamepadKeys.Button.B;
