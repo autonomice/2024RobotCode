@@ -11,7 +11,6 @@ import github.autonomice.subsystems.ColorSensor;
 import github.autonomice.subsystems.Drivetrain;
 import github.autonomice.subsystems.Intake;
 import github.autonomice.util.BulkReader;
-import github.autonomice.util.ImuHandler;
 
 public class Robot extends com.arcrobotics.ftclib.command.Robot {
     Props.AutoProps.AutoSide side;
@@ -22,7 +21,6 @@ public class Robot extends com.arcrobotics.ftclib.command.Robot {
     public final ColorSensor mColorSensor;
     // not subsystem
     private final BulkReader mBulkReader;
-    private final ImuHandler mImu;
     private final Telemetry telemetry;
 
     public Robot(HardwareMap hwMap, Telemetry telemetry) {
@@ -34,7 +32,6 @@ public class Robot extends com.arcrobotics.ftclib.command.Robot {
         this.mColorSensor = new ColorSensor(hwMap);
 
         this.mBulkReader = new BulkReader(hwMap);
-        this.mImu = new ImuHandler(hwMap, Constants.imuParameters, 0.0);
 
         this.telemetry = telemetry;
     }
@@ -45,7 +42,7 @@ public class Robot extends com.arcrobotics.ftclib.command.Robot {
 
     public void teleopInit(Props.TeleopProps props) {
         mDriveTrain.setDefaultCommand(
-                new Drivetrain.DefaultCommand(this.mDriveTrain, props.gamepad1, this.mImu)
+                new Drivetrain.DefaultCommand(this.mDriveTrain, props.gamepad1)
         );
         mArm.setDefaultCommand(
                 new Arm.DefaultCommand(this.mArm, props.gamepad1)
@@ -66,16 +63,6 @@ public class Robot extends com.arcrobotics.ftclib.command.Robot {
                 .gamepad1
                 .getGamepadButton(Constants.ArmDownButton)
                 .whenReleased(new InstantCommand(mArm::runDown, mArm));
-
-        props
-                .gamepad1
-                .getGamepadButton(Constants.IMUPoseResetButton)
-                .whenReleased(new InstantCommand(mImu::reset));
-
-        props
-                .gamepad1
-                .getGamepadButton(Constants.DriveBaseModeSwitchButton)
-                .whenReleased(new InstantCommand(mDriveTrain::switchDriveMode, mDriveTrain));
     }
 
     public void autoInit(Props.AutoProps props) {
