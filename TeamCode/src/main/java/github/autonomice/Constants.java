@@ -9,6 +9,8 @@ public class Constants {
     public static final String INTAKE_KEY = "intake";
     public static final GamepadKeys.Trigger INTAKE_IN = GamepadKeys.Trigger.RIGHT_TRIGGER;
     public static final GamepadKeys.Trigger INTAKE_OUT = GamepadKeys.Trigger.LEFT_TRIGGER;
+    public static final double INTAKE_IN_POWER = 0.7;
+    public static final double INTAKE_OUT_POWER = 0.7;
 
     // Arm Constants
     public static final String ARM_KEY = "arm";
