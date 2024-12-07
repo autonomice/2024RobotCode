@@ -9,11 +9,9 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import github.autonomice.Constants;
-import github.autonomice.util.ImuHandler;
 
 public class Drivetrain extends SubsystemBase {
     public final MecanumDrive mDriveBase;
-    public DriveOrientation orientation = DriveOrientation.ROBOT;
     public DriveTrainCoefficients coefficients = Constants.driveTrainCoefficients;
 
 
@@ -23,17 +21,6 @@ public class Drivetrain extends SubsystemBase {
                         new Motor(hwMap, Constants.RightFrontKey, Motor.GoBILDA.RPM_312),
                         new Motor(hwMap, Constants.LeftBackKey, Motor.GoBILDA.RPM_312),
                         new Motor(hwMap, Constants.RightBackKey, Motor.GoBILDA.RPM_312));
-    }
-
-    public void switchDriveMode() {
-        switch (this.orientation) {
-            case FIELD:
-                this.orientation = DriveOrientation.ROBOT;
-                break;
-            case ROBOT:
-                this.orientation = DriveOrientation.FIELD;
-                break;
-        }
     }
 
     public static class DefaultAutoCommand extends CommandBase {
@@ -68,33 +55,20 @@ public class Drivetrain extends SubsystemBase {
     public static class DefaultCommand extends CommandBase {
         private final Drivetrain mDriveTrain;
         private final GamepadEx mGamePad;
-        private final ImuHandler mImu;
 
-        public DefaultCommand(Drivetrain driveTrain, GamepadEx gamepad, ImuHandler imu) {
+        public DefaultCommand(Drivetrain driveTrain, GamepadEx gamepad) {
             this.mDriveTrain = driveTrain;
             this.mGamePad = gamepad;
-            this.mImu = imu;
 
             addRequirements(driveTrain);
         }
 
         @Override
         public void execute() {
-            switch (mDriveTrain.orientation) {
-                case FIELD:
-                    this.mDriveTrain.mDriveBase.driveFieldCentric(
-                            mGamePad.getLeftX() * mDriveTrain.coefficients.x,
-                            mGamePad.getLeftY() * mDriveTrain.coefficients.y,
-                            mGamePad.getRightX() * mDriveTrain.coefficients.z,
-                            mImu.getYaw());
-                    break;
-                case ROBOT:
-                    this.mDriveTrain.mDriveBase.driveRobotCentric(
-                            mGamePad.getLeftX() * mDriveTrain.coefficients.x,
-                            mGamePad.getLeftY() * mDriveTrain.coefficients.y,
-                            mGamePad.getRightX() * mDriveTrain.coefficients.z);
-                    break;
-            }
+            this.mDriveTrain.mDriveBase.driveRobotCentric(
+                    mGamePad.getLeftX() * mDriveTrain.coefficients.x,
+                    mGamePad.getLeftY() * mDriveTrain.coefficients.y,
+                    mGamePad.getRightX() * mDriveTrain.coefficients.z);
         }
     }
 
@@ -106,10 +80,5 @@ public class Drivetrain extends SubsystemBase {
             this.y = y;
             this.z = z;
         }
-    }
-
-    public enum DriveOrientation {
-        FIELD,
-        ROBOT
     }
 }
