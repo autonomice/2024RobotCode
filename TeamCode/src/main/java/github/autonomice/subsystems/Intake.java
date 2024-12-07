@@ -12,7 +12,7 @@ public class Intake extends SubsystemBase {
     public final DcMotor mMotor;
 
     public Intake(HardwareMap hwMap) {
-        this.mMotor = hwMap.get(DcMotor.class, Constants.IntakeKey);
+        this.mMotor = hwMap.get(DcMotor.class, Constants.INTAKE_KEY);
     }
 
     public static class DefaultCommand extends CommandBase {
@@ -28,9 +28,9 @@ public class Intake extends SubsystemBase {
 
         @Override
         public void execute() {
-            if (mGamepad.getTrigger(Constants.IntakeIn) != 0) {
+            if (mGamepad.getTrigger(Constants.INTAKE_IN) != 0) {
                 this.mIntake.mMotor.setPower(0.7);
-            } else if (mGamepad.getTrigger(Constants.IntakeOut) != 0) {
+            } else if (mGamepad.getTrigger(Constants.INTAKE_OUT) != 0) {
                 this.mIntake.mMotor.setPower(-0.7);
             } else {
                 this.mIntake.mMotor.setPower(0.0);

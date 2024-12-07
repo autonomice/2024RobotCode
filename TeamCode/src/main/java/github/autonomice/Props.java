@@ -13,18 +13,4 @@ public class Props {
             this.gamepad2 = new GamepadEx(gamepad2);
         }
     }
-
-    public static class AutoProps {
-        public final AutoSide side;
-
-        public AutoProps(AutoSide side) {
-            this.side = side;
-        }
-
-        public enum AutoSide {
-            RIGHT,
-            LEFT
-        }
-    }
-
 }

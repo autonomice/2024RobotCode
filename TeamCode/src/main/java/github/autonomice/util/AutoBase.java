@@ -1,38 +1,22 @@
 package github.autonomice.util;
 
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.acmerobotics.roadrunner.Action;
+import com.acmerobotics.roadrunner.ftc.Actions;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import github.autonomice.Props;
 import github.autonomice.Robot;
 
-public abstract class AutoBase extends OpMode {
-    private Robot r;
+public abstract class AutoBase extends LinearOpMode {
+    protected Robot r;
 
     @Override
-    public void init() {
-        r = new Robot(hardwareMap, telemetry);
-        r.autoInit(getProps());
+    public void runOpMode() throws InterruptedException {
+        this.r = new Robot(hardwareMap, telemetry);
+
+        waitForStart();
+
+        Actions.runBlocking(getAction());
     }
 
-
-    @Override
-    public void init_loop() {
-        super.init_loop();
-
-        r.run();
-    }
-
-    @Override
-    public void start() {
-        super.start();
-
-        r.autoStart();
-    }
-
-    @Override
-    public void loop() {
-        r.run();
-    }
-
-    public abstract Props.AutoProps getProps();
+    public abstract Action getAction();
 }

@@ -17,7 +17,7 @@ public class Arm extends SubsystemBase {
     private final PIDFController pidController;
 
     public Arm(HardwareMap hwMap) {
-        this.mMotor = hwMap.get(DcMotor.class, Constants.ArmKey);
+        this.mMotor = hwMap.get(DcMotor.class, Constants.ARM_KEY);
         this.mMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         this.mMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         this.mMotor.setPower(0.0);
@@ -33,11 +33,11 @@ public class Arm extends SubsystemBase {
     }
 
     public void runUp() {
-        this.currentPos = Constants.ArmUpPos;
+        this.currentPos = Constants.ARM_UP_POS;
     }
 
     public void runDown() {
-        this.currentPos = Constants.ArmDownPos;
+        this.currentPos = Constants.ARM_DOWN_POS;
     }
 
     public static class DefaultCommand extends CommandBase {

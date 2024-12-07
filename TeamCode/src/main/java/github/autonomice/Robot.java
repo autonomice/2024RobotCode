@@ -7,14 +7,13 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 import github.autonomice.subsystems.Arm;
-import github.autonomice.subsystems.Drivetrain;
 import github.autonomice.subsystems.Intake;
+import github.autonomice.subsystems.MecanumDrive;
 import github.autonomice.util.BulkReader;
 
 public class Robot extends com.arcrobotics.ftclib.command.Robot {
-    Props.AutoProps.AutoSide side;
     // subsystems
-    public final Drivetrain mDriveTrain;
+    public final MecanumDrive mecanumDrive;
     public final Arm mArm;
     public final Intake mIntake;
     // not subsystem
@@ -22,7 +21,7 @@ public class Robot extends com.arcrobotics.ftclib.command.Robot {
     private final Telemetry telemetry;
 
     public Robot(HardwareMap hwMap, Telemetry telemetry) {
-        this.mDriveTrain = new Drivetrain(hwMap);
+        this.mecanumDrive = new MecanumDrive(hwMap);
 
         this.mArm = new Arm(hwMap);
 
@@ -34,12 +33,12 @@ public class Robot extends com.arcrobotics.ftclib.command.Robot {
     }
 
     public void baseInit() {
-        register(this.mDriveTrain, this.mArm, this.mIntake);
+        register(this.mecanumDrive, this.mArm, this.mIntake);
     }
 
     public void teleopInit(Props.TeleopProps props) {
-        mDriveTrain.setDefaultCommand(
-                new Drivetrain.DefaultCommand(this.mDriveTrain, props.gamepad1)
+        mecanumDrive.setDefaultCommand(
+                new MecanumDrive.DefaultCommand(this.mecanumDrive, props.gamepad1)
         );
         mArm.setDefaultCommand(
                 new Arm.DefaultCommand(this.mArm, props.gamepad2)
@@ -50,23 +49,13 @@ public class Robot extends com.arcrobotics.ftclib.command.Robot {
 
         props
                 .gamepad2
-                .getGamepadButton(Constants.ArmUpButton)
+                .getGamepadButton(Constants.ARM_UP_BUTTON)
                 .whenReleased(new InstantCommand(mArm::runUp, mArm));
 
         props
                 .gamepad2
-                .getGamepadButton(Constants.ArmDownButton)
+                .getGamepadButton(Constants.ARM_DOWN_BUTTON)
                 .whenReleased(new InstantCommand(mArm::runDown, mArm));
-    }
-
-    public void autoInit(Props.AutoProps props) {
-        this.side = props.side;
-    }
-
-    public void autoStart() {
-        this.mDriveTrain.setDefaultCommand(
-                new Drivetrain.DefaultAutoCommand(this.mDriveTrain)
-        );
     }
 
     @Override
