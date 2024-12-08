@@ -4,14 +4,14 @@ import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import github.autonomice.Robot;
+import github.autonomice.subsystems.MecanumDrive;
 
 public abstract class AutoBase extends LinearOpMode {
-    protected Robot r;
+    protected MecanumDrive drive;
 
     @Override
     public void runOpMode() throws InterruptedException {
-        this.r = new Robot(hardwareMap, telemetry);
+        this.drive = new MecanumDrive(hardwareMap);
 
         waitForStart();
 

@@ -45,6 +45,11 @@ import com.qualcomm.robotcore.hardware.VoltageSensor;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 
+import java.lang.Math;
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+
 import github.autonomice.Constants;
 import github.autonomice.util.rr.Drawing;
 import github.autonomice.util.rr.Localizer;
@@ -52,11 +57,6 @@ import github.autonomice.util.rr.messages.DriveCommandMessage;
 import github.autonomice.util.rr.messages.MecanumCommandMessage;
 import github.autonomice.util.rr.messages.MecanumLocalizerInputsMessage;
 import github.autonomice.util.rr.messages.PoseMessage;
-
-import java.lang.Math;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
 
 @Config
 public final class MecanumDrive extends SubsystemBase {
@@ -106,8 +106,8 @@ public final class MecanumDrive extends SubsystemBase {
         public void execute() {
             this.mecanumDrive.setDrivePowers(new PoseVelocity2d(
                     new Vector2d(
-                        mGamePad.getLeftX() * PARAMS.strafeScale,
-                        mGamePad.getLeftY() * PARAMS.forwardScale
+                            mGamePad.getLeftY() * PARAMS.forwardScale,
+                            mGamePad.getLeftX() * PARAMS.strafeScale
                     ),
                     mGamePad.getRightX() * PARAMS.turnScale
             ));

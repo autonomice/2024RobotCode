@@ -24,47 +24,49 @@ public class Constants {
     public static final GamepadKeys.Button ARM_DOWN_BUTTON = GamepadKeys.Button.A;
 
     // Starting Pose
-    public static final Pose2d STARTING_POSE = new Pose2d(0, 0, 0);
+    public static final Pose2d STARTING_POSE = new Pose2d(6, 0, 0);
 
     // Mecanum Drive Parameters
     public static class MecanumDriveParams {
-        // IMU Orientation
+        // IMU orientation
+        // TODO: fill in these values based on
+        //   see https://ftc-docs.firstinspires.org/en/latest/programming_resources/imu/imu.html?highlight=imu#physical-hub-mounting
         public RevHubOrientationOnRobot.LogoFacingDirection logoFacingDirection =
                 RevHubOrientationOnRobot.LogoFacingDirection.LEFT;
         public RevHubOrientationOnRobot.UsbFacingDirection usbFacingDirection =
                 RevHubOrientationOnRobot.UsbFacingDirection.UP;
 
-        // Drive Model Parameters
+        // drive model parameters
         public double inPerTick = 0.022;
         public double lateralInPerTick = inPerTick;
         public double trackWidthTicks = 1095.834612508758;
 
-        // Feedforward Parameters (in tick units)
-        public double kS = 0.8134666294185617;
+        // feedforward parameters (in tick units)
+        public double kS = 0.8568074140041055;
         public double kV = 0.004359305622916281;
-        public double kA = 0.001;
+        public double kA = 0.00001;
 
-        // Path Profile Parameters (in inches)
-        public double maxWheelVel = 50.0;
-        public double minProfileAccel = -30.0;
-        public double maxProfileAccel = 50.0;
+        // path profile parameters (in inches)
+        public double maxWheelVel = 50;
+        public double minProfileAccel = -30;
+        public double maxProfileAccel = 50;
 
-        // Turn Profile Parameters (in radians)
-        public double maxAngVel = Math.PI; // Shared with path
+        // turn profile parameters (in radians)
+        public double maxAngVel = Math.PI; // shared with path
         public double maxAngAccel = Math.PI;
 
-        // Path Controller Gains
-        public double axialGain = 0.0;
-        public double lateralGain = 0.0;
-        public double headingGain = 0.0; // Shared with turn
+        // path controller gains
+        public double axialGain = 3.0;
+        public double lateralGain = 5.0;
+        public double headingGain = 3.0; // shared with turn
 
         public double axialVelGain = 0.0;
         public double lateralVelGain = 0.0;
-        public double headingVelGain = 0.0; // Shared with turn
+        public double headingVelGain = 0.0; // shared with turn
 
         // Teleop Motion Parameters
-        public double strafeScale = 1.0;
         public double forwardScale = 1.0;
-        public double turnScale = 0.5;
+        public double strafeScale = -1.0;
+        public double turnScale = -0.5;
     }
 }
