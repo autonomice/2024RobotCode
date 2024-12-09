@@ -1,5 +1,9 @@
 package github.autonomice.subsystems;
 
+import androidx.annotation.NonNull;
+
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+import com.acmerobotics.roadrunner.Action;
 import com.arcrobotics.ftclib.command.CommandBase;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.controller.PIDFController;
@@ -13,11 +17,11 @@ import github.autonomice.Constants;
 public class Arm extends SubsystemBase {
 
     public final DcMotor mMotor;
-    public float currentPos = 0;
+    public float targetPos = 0;
     private final PIDFController pidController;
 
     public Arm(HardwareMap hwMap) {
-        this.mMotor = hwMap.get(DcMotor.class, Constants.ArmKey);
+        this.mMotor = hwMap.get(DcMotor.class, Constants.ARM_KEY);
         this.mMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         this.mMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         this.mMotor.setPower(0.0);
@@ -32,12 +36,36 @@ public class Arm extends SubsystemBase {
         this.pidController.setTolerance(Constants.ARM_TOLERANCE);
     }
 
+    public void pidUpdate() {
+        this.pidController.setSetPoint(this.targetPos);
+
+        double pidOutput = this.pidController.calculate(
+                this.mMotor.getCurrentPosition()
+        );
+
+        pidOutput = Range.clip(pidOutput, -1.0, 1.0);
+
+        this.mMotor.setPower(pidOutput);
+    }
+
     public void runUp() {
-        this.currentPos = Constants.ArmUpPos;
+        this.targetPos = Constants.ARM_UP_POS;
     }
 
     public void runDown() {
-        this.currentPos = Constants.ArmDownPos;
+        this.targetPos = Constants.ARM_DOWN_POS;
+    }
+
+    public Action runToPos(int pos) {
+        return new Action() {
+            @Override
+            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+                targetPos = pos;
+                pidUpdate();
+
+                return Math.abs(mMotor.getCurrentPosition() - targetPos) > Constants.ARM_TOLERANCE;
+            }
+        };
     }
 
     public static class DefaultCommand extends CommandBase {
@@ -53,17 +81,8 @@ public class Arm extends SubsystemBase {
 
         @Override
         public void execute() {
-            this.mArm.currentPos += (float) (-2 * this.mGamepad.getRightY());
-
-            this.mArm.pidController.setSetPoint(this.mArm.currentPos);
-
-            double pidOutput = this.mArm.pidController.calculate(
-                    this.mArm.mMotor.getCurrentPosition()
-            );
-
-            pidOutput = Range.clip(pidOutput, -1.0, 1.0);
-
-            this.mArm.mMotor.setPower(pidOutput);
+            this.mArm.targetPos += (float) (-2 * this.mGamepad.getRightY());
+            this.mArm.pidUpdate();
         }
     }
 }
