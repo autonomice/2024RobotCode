@@ -23,9 +23,6 @@ public class Constants {
     public static final GamepadKeys.Button ARM_UP_BUTTON = GamepadKeys.Button.Y;
     public static final GamepadKeys.Button ARM_DOWN_BUTTON = GamepadKeys.Button.A;
 
-    // Starting Pose
-    public static final Pose2d STARTING_POSE = new Pose2d(6, 0, 0);
-
     // Mecanum Drive Parameters
     public static class MecanumDriveParams {
         // IMU orientation

@@ -21,7 +21,7 @@ public class Robot extends com.arcrobotics.ftclib.command.Robot {
     private final Telemetry telemetry;
 
     public Robot(HardwareMap hwMap, Telemetry telemetry) {
-        this.mecanumDrive = new MecanumDrive(hwMap);
+        this.mecanumDrive = new MecanumDrive(hwMap, null);
 
         this.mArm = new Arm(hwMap);
 

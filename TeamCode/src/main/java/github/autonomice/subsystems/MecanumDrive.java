@@ -1,6 +1,7 @@
 package github.autonomice.subsystems;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.acmerobotics.dashboard.canvas.Canvas;
 import com.acmerobotics.dashboard.config.Config;
@@ -199,8 +200,8 @@ public final class MecanumDrive extends SubsystemBase {
         }
     }
 
-    public MecanumDrive(HardwareMap hardwareMap) {
-        this.pose = Constants.STARTING_POSE;
+    public MecanumDrive(HardwareMap hardwareMap, @Nullable Pose2d startingPose) {
+        this.pose = startingPose;
 
         LynxFirmware.throwIfModulesAreOutdated(hardwareMap);
 
