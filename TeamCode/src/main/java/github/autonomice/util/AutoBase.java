@@ -1,38 +1,31 @@
 package github.autonomice.util;
 
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.acmerobotics.roadrunner.Action;
+import com.acmerobotics.roadrunner.Pose2d;
+import com.acmerobotics.roadrunner.ftc.Actions;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import github.autonomice.Props;
-import github.autonomice.Robot;
+import github.autonomice.subsystems.Arm;
+import github.autonomice.subsystems.Intake;
+import github.autonomice.subsystems.MecanumDrive;
 
-public abstract class AutoBase extends OpMode {
-    private Robot r;
-
-    @Override
-    public void init() {
-        r = new Robot(hardwareMap, telemetry);
-        r.autoInit(getProps());
-    }
-
-
-    @Override
-    public void init_loop() {
-        super.init_loop();
-
-        r.run();
-    }
+public abstract class AutoBase extends LinearOpMode {
+    protected MecanumDrive drive;
+    protected Arm arm;
+    protected Intake intake;
 
     @Override
-    public void start() {
-        super.start();
+    public void runOpMode() throws InterruptedException {
+        this.drive = new MecanumDrive(hardwareMap, getStartingPose());
+        this.arm = new Arm(hardwareMap);
+        this.intake = new Intake(hardwareMap);
 
-        r.autoStart();
+        waitForStart();
+
+        Actions.runBlocking(getAction());
     }
 
-    @Override
-    public void loop() {
-        r.run();
-    }
+    public abstract Pose2d getStartingPose();
 
-    public abstract Props.AutoProps getProps();
+    public abstract Action getAction();
 }
