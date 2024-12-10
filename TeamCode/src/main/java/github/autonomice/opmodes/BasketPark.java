@@ -17,19 +17,21 @@ public abstract class BasketPark extends AutoBase {
                 this.drive.actionBuilder(getStartingPose())
                         .splineTo(basket.position, basket.heading)
                         .build(),
-                new SleepAction(1.0),
                 this.arm.runToPos(Constants.ARM_UP_POS),
-                //this.intake.setPower(Constants.INTAKE_OUT_POWER),
+                this.intake.setPower(Constants.INTAKE_OUT_POWER),
+                new SleepAction(1.0),
+                this.intake.setPower(0.),
                 this.arm.runToPos(0),
-                //this.intake.setPower(0.),
                 this.drive.actionBuilder(basket)
-                        .splineToConstantHeading(new Vector2d(44, 17), basket.heading)
-                        .turnTo(0)
-                        .lineToX(48)
-                        .turnTo(basket.heading)
-                        .splineToConstantHeading(basket.position, basket.heading)
+                        .strafeTo(new Vector2d(36, basket.position.y))
+                        .splineToLinearHeading(new Pose2d(44, 24, 0), basket.heading)
+                        .splineToSplineHeading(basket, 0)
+                        .strafeTo(new Vector2d(48, basket.position.y))
+                        .splineToLinearHeading(new Pose2d(51, 24,0), basket.heading)
+                        .splineToSplineHeading(basket, 0)
+                        .lineToX(basket.position.x - 12)
                         .turnTo(-Math.PI / 2)
-                        .splineTo(new Vector2d(-60, 66), Math.PI)
+                        .splineTo(new Vector2d(-55, 62), Math.PI)
                         .build()
         );
     }
