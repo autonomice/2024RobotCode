@@ -13,20 +13,19 @@ public class MeepMeepTesting {
 
         RoadRunnerBotEntity myBot = new DefaultBotBuilder(meepMeep)
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
-                .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
+                .setConstraints(45, 50, Math.PI, Math.PI, 24.1)
                 .build();
 
-        myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(24, 64, -Math.PI / 2))
-                .splineTo(basket.position, basket.heading)
-                .strafeTo(new Vector2d(36, basket.position.y))
-                .splineToLinearHeading(new Pose2d(44, 24, 0), basket.heading)
-                .splineToSplineHeading(basket, 0)
-                .strafeTo(new Vector2d(48, basket.position.y))
-                .splineToLinearHeading(new Pose2d(51, 24,0), basket.heading)
-                .splineToSplineHeading(basket, 0)
-                .lineToX(basket.position.x - 12)
-                .turnTo(-Math.PI / 2)
-                .splineTo(new Vector2d(-55, 62), Math.PI)
+        myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(-24, 64, -Math.PI / 2))
+                .strafeToLinearHeading(basket.position, basket.heading) // go to basket
+                .strafeTo(new Vector2d(basket.position.x - 8, basket.position.y)) // bugfix mostly
+                .splineToLinearHeading(new Pose2d(44, 24, 0), basket.heading) // line up first sample
+                .splineToSplineHeading(basket, 0) // push first sample
+                .strafeTo(new Vector2d(basket.position.x - 5, basket.position.y)) // away from first sample
+                .splineToLinearHeading(new Pose2d(51, 24,0), basket.heading) // line up second
+                .splineToSplineHeading(basket, 0) // push second
+                .strafeToLinearHeading(new Vector2d(basket.position.x - 6, 60), 0) // line up park
+                .strafeTo(new Vector2d(-55, 60)) // park
                 .build());
 
         meepMeep.setBackground(MeepMeep.Background.FIELD_INTO_THE_DEEP_OFFICIAL)

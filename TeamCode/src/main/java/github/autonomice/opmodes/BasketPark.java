@@ -15,7 +15,7 @@ public abstract class BasketPark extends AutoBase {
         Pose2d basket = new Pose2d(56, 56, Math.PI / 4);
         return new SequentialAction(
                 this.drive.actionBuilder(getStartingPose())
-                        .splineTo(basket.position, basket.heading)
+                        .strafeToLinearHeading(basket.position, basket.heading) // go to basket
                         .build(),
                 this.arm.runToPos(Constants.ARM_UP_POS),
                 this.intake.setPower(Constants.INTAKE_OUT_POWER),
@@ -23,15 +23,14 @@ public abstract class BasketPark extends AutoBase {
                 this.intake.setPower(0.),
                 this.arm.runToPos(0),
                 this.drive.actionBuilder(basket)
-                        .strafeTo(new Vector2d(36, basket.position.y))
-                        .splineToLinearHeading(new Pose2d(44, 24, 0), basket.heading)
-                        .splineToSplineHeading(basket, 0)
-                        .strafeTo(new Vector2d(48, basket.position.y))
-                        .splineToLinearHeading(new Pose2d(51, 24,0), basket.heading)
-                        .splineToSplineHeading(basket, 0)
-                        .lineToX(basket.position.x - 12)
-                        .turnTo(-Math.PI / 2)
-                        .splineTo(new Vector2d(-55, 62), Math.PI)
+                        .strafeTo(new Vector2d(basket.position.x - 8, basket.position.y)) // bugfix mostly
+                        .splineToLinearHeading(new Pose2d(44, 24, 0), basket.heading) // line up first sample
+                        .splineToSplineHeading(basket, 0) // push first sample
+                        .strafeTo(new Vector2d(basket.position.x - 5, basket.position.y)) // away from first sample
+                        .splineToLinearHeading(new Pose2d(51, 24,0), basket.heading) // line up second
+                        .splineToSplineHeading(basket, 0) // push second
+                        .strafeToLinearHeading(new Vector2d(basket.position.x - 6, 60), 0) // line up park
+                        .strafeTo(new Vector2d(-55, 60)) // park
                         .build()
         );
     }
