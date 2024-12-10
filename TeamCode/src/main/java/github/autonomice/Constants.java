@@ -1,6 +1,5 @@
 package github.autonomice;
 
-import com.acmerobotics.roadrunner.Pose2d;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 
@@ -14,12 +13,13 @@ public class Constants {
 
     // Arm Constants
     public static final String ARM_KEY = "arm";
-    public static final int ARM_UP_POS = -1020;
-    public static final int ARM_DOWN_POS = -1900;
+    public static final int ARM_UP_POS = -1120;
+    public static final int ARM_DOWN_POS = -2000;
     public static final double ARM_KP = 0.001;
     public static final double ARM_KI = 0.004;
     public static final double ARM_KD = 0.00015;
-    public static final double ARM_TOLERANCE = 5.0;
+    public static final double ARM_KF = 0.0015;
+    public static final double ARM_TOLERANCE = 7.5;
     public static final GamepadKeys.Button ARM_UP_BUTTON = GamepadKeys.Button.Y;
     public static final GamepadKeys.Button ARM_DOWN_BUTTON = GamepadKeys.Button.A;
 
@@ -29,7 +29,7 @@ public class Constants {
         // TODO: fill in these values based on
         //   see https://ftc-docs.firstinspires.org/en/latest/programming_resources/imu/imu.html?highlight=imu#physical-hub-mounting
         public RevHubOrientationOnRobot.LogoFacingDirection logoFacingDirection =
-                RevHubOrientationOnRobot.LogoFacingDirection.LEFT;
+                RevHubOrientationOnRobot.LogoFacingDirection.RIGHT;
         public RevHubOrientationOnRobot.UsbFacingDirection usbFacingDirection =
                 RevHubOrientationOnRobot.UsbFacingDirection.UP;
 
@@ -39,9 +39,9 @@ public class Constants {
         public double trackWidthTicks = 1095.834612508758;
 
         // feedforward parameters (in tick units)
-        public double kS = 0.8568074140041055;
-        public double kV = 0.004359305622916281;
-        public double kA = 0.00001;
+        public double kS = 0.85940577;
+        public double kV = 0.00440237;
+        public double kA = 0.0001;
 
         // path profile parameters (in inches)
         public double maxWheelVel = 50;
@@ -53,9 +53,9 @@ public class Constants {
         public double maxAngAccel = Math.PI;
 
         // path controller gains
-        public double axialGain = 3.0;
+        public double axialGain = 3.5;
         public double lateralGain = 5.0;
-        public double headingGain = 3.0; // shared with turn
+        public double headingGain = 3.5; // shared with turn
 
         public double axialVelGain = 0.0;
         public double lateralVelGain = 0.0;
