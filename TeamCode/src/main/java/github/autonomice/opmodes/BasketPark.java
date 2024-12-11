@@ -13,6 +13,7 @@ public abstract class BasketPark extends AutoBase {
     @Override
     public Action getAction() {
         Pose2d basket = new Pose2d(57, 58, Math.PI / 4);
+        Vector2d resetPos = new Vector2d(basket.position.x - 9, basket.position.y);
         return new SequentialAction(
                 this.drive.actionBuilder(getStartingPose())
                         .strafeToLinearHeading(basket.position, basket.heading) // go to basket
@@ -23,10 +24,10 @@ public abstract class BasketPark extends AutoBase {
                 //this.intake.setPower(0.),
                 this.arm.runToPos(0),
                 this.drive.actionBuilder(basket)
-                        .strafeTo(new Vector2d(basket.position.x - 9, basket.position.y)) // bugfix mostly
+                        .strafeTo(resetPos) // bugfix mostly
                         .splineToLinearHeading(new Pose2d(40, 22, 0), basket.heading) // line up first sample
                         .splineToSplineHeading(basket, 0) // push first sample
-                        .strafeTo(new Vector2d(basket.position.x - 9, basket.position.y)) // away from first sample
+                        .strafeTo(resetPos) // away from first sample
                         .splineToLinearHeading(new Pose2d(50, 22,0), basket.heading) // line up second
                         .splineToSplineHeading(basket, 0) // push second
                         .strafeToConstantHeading(new Vector2d(basket.position.x, 24)) // position third

@@ -16,26 +16,19 @@ public class MeepMeepTesting {
                 .setConstraints(45, 50, Math.PI, Math.PI, 24.1)
                 .build();
 
-        myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(-24, 64, -Math.PI / 2))
-                /* .strafeToLinearHeading(basket.position, basket.heading) // go to basket
-                .strafeTo(new Vector2d(basket.position.x - 8, basket.position.y)) // bugfix mostly
-                .splineToLinearHeading(new Pose2d(44, 24, 0), basket.heading) // line up first sample
+        myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(24, 64, -Math.PI / 2))
+                .strafeToLinearHeading(basket.position, basket.heading) // go to basket
+                .strafeTo(new Vector2d(basket.position.x - 9, basket.position.y)) // bugfix mostly
+                .splineToLinearHeading(new Pose2d(40, 22, 0), basket.heading) // line up first sample
                 .splineToSplineHeading(basket, 0) // push first sample
-                .strafeTo(new Vector2d(basket.position.x - 5, basket.position.y)) // away from first sample
-                .splineToLinearHeading(new Pose2d(51, 24,0), basket.heading) // line up second
+                .strafeTo(new Vector2d(basket.position.x - 9, basket.position.y)) // away from first sample
+                .splineToLinearHeading(new Pose2d(50, 22,0), basket.heading) // line up second
                 .splineToSplineHeading(basket, 0) // push second
                 .strafeToConstantHeading(new Vector2d(basket.position.x, 24)) // position third
-                .strafeToLinearHeading(new Vector2d(62, 24), 0) // get third
-                .strafeTo(new Vector2d(62, 55)) // push third
+                .strafeToLinearHeading(new Vector2d(63, 24), 0) // get third
+                .strafeTo(new Vector2d(63, 63)) // push third
                 .strafeToLinearHeading(new Vector2d(basket.position.x - 6, 60), 0) // line up park
-                .strafeTo(new Vector2d(-55, 60)) // park */
-                .strafeToLinearHeading(basket.position, basket.heading) // go to basket
-                .strafeTo(new Vector2d(basket.position.x - 12, basket.position.y)) // bugfix mostly
-                .splineToLinearHeading(new Pose2d(44, 22, 0), basket.heading) // line up first sample
-                .splineToSplineHeading(basket, 0) // push first sample
-                .strafeTo(new Vector2d(basket.position.x - 12, basket.position.y)) // away from first sample
-                .splineToLinearHeading(new Pose2d(52, 22,0), basket.heading) // line up second
-                .splineToSplineHeading(basket, 0) // push second
+                .strafeTo(new Vector2d(-55, 60)) // park
                 .build());
 
         meepMeep.setBackground(MeepMeep.Background.FIELD_INTO_THE_DEEP_OFFICIAL)
