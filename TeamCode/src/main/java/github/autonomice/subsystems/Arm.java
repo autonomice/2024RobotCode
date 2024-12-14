@@ -56,14 +56,28 @@ public class Arm extends SubsystemBase {
         this.targetPos = Constants.ARM_DOWN_POS;
     }
 
+    public void runNeutral() {
+        this.targetPos = Constants.ARM_NEUTRAL_POS;
+    }
+
     public Action runToPos(int pos) {
         return new Action() {
             @Override
             public boolean run(@NonNull TelemetryPacket telemetryPacket) {
                 targetPos = pos;
-                pidUpdate();
 
                 return Math.abs(mMotor.getCurrentPosition() - targetPos) > Constants.ARM_TOLERANCE;
+            }
+        };
+    }
+
+    public Action pidUpdateAction() {
+        return new Action() {
+            @Override
+            public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+                pidUpdate();
+
+                return true;
             }
         };
     }

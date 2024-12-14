@@ -56,6 +56,11 @@ public class Robot extends com.arcrobotics.ftclib.command.Robot {
                 .gamepad2
                 .getGamepadButton(Constants.ARM_DOWN_BUTTON)
                 .whenReleased(new InstantCommand(mArm::runDown, mArm));
+
+        props
+                .gamepad2
+                .getGamepadButton(Constants.ARM_NEUTRAL_BUTTON)
+                .whenReleased(new InstantCommand(mArm::runNeutral, mArm));
     }
 
     @Override

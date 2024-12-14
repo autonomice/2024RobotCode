@@ -7,16 +7,16 @@ import com.acmerobotics.roadrunner.Action;
 import com.arcrobotics.ftclib.command.CommandBase;
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
-import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import github.autonomice.Constants;
 
 public class Intake extends SubsystemBase {
-    public final DcMotor mMotor;
+    public final CRServo mMotor;
 
     public Intake(HardwareMap hwMap) {
-        this.mMotor = hwMap.get(DcMotor.class, Constants.INTAKE_KEY);
+        this.mMotor = hwMap.get(CRServo.class, Constants.INTAKE_KEY);
     }
 
     public Action setPower(double power) {
@@ -47,7 +47,7 @@ public class Intake extends SubsystemBase {
             } else if (mGamepad.getTrigger(Constants.INTAKE_OUT) != 0) {
                 this.mIntake.mMotor.setPower(Constants.INTAKE_OUT_POWER);
             } else {
-                this.mIntake.mMotor.setPower(0.0);
+                this.mIntake.mMotor.setPower(Constants.INTAKE_STOP_POWER);
             }
         }
     }

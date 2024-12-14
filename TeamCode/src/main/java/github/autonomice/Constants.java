@@ -8,20 +8,23 @@ public class Constants {
     public static final String INTAKE_KEY = "intake";
     public static final GamepadKeys.Trigger INTAKE_IN = GamepadKeys.Trigger.RIGHT_TRIGGER;
     public static final GamepadKeys.Trigger INTAKE_OUT = GamepadKeys.Trigger.LEFT_TRIGGER;
-    public static final double INTAKE_IN_POWER = 0.7;
-    public static final double INTAKE_OUT_POWER = 0.7;
+    public static final double INTAKE_IN_POWER = 1;
+    public static final double INTAKE_OUT_POWER = -1;
+    public static final double INTAKE_STOP_POWER = 0;
 
     // Arm Constants
     public static final String ARM_KEY = "arm";
-    public static final int ARM_UP_POS = -1120;
-    public static final int ARM_DOWN_POS = -2000;
+    public static final int ARM_UP_POS = -800;
+    public static final int ARM_DOWN_POS = -1800;
+    public static final int ARM_NEUTRAL_POS = -420;
     public static final double ARM_KP = 0.001;
     public static final double ARM_KI = 0.004;
     public static final double ARM_KD = 0.00015;
     public static final double ARM_KF = 0.0015;
-    public static final double ARM_TOLERANCE = 7.5;
+    public static final double ARM_TOLERANCE = 8.5;
     public static final GamepadKeys.Button ARM_UP_BUTTON = GamepadKeys.Button.Y;
     public static final GamepadKeys.Button ARM_DOWN_BUTTON = GamepadKeys.Button.A;
+    public static final GamepadKeys.Button ARM_NEUTRAL_BUTTON = GamepadKeys.Button.X;
 
     // Mecanum Drive Parameters
     public static class MecanumDriveParams {
@@ -44,7 +47,7 @@ public class Constants {
         public double kA = 0.0001;
 
         // path profile parameters (in inches)
-        public double maxWheelVel = 35;
+        public double maxWheelVel = 40;
         public double minProfileAccel = -30;
         public double maxProfileAccel = 50;
 

@@ -8,6 +8,6 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 public class AutoRight extends BasketPark {
     @Override
     public Pose2d getStartingPose() {
-        return new Pose2d(new Vector2d(-24, 64), -Math.PI / 2);
+        return new Pose2d(new Vector2d(-24, 65), -Math.PI / 2);
     }
 }
