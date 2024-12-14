@@ -6,11 +6,13 @@ import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.SleepAction;
 import com.acmerobotics.roadrunner.Vector2d;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import github.autonomice.Constants;
 import github.autonomice.util.AutoBase;
 
-public abstract class BasketPark extends AutoBase {
+@Autonomous(name = "BasketSamplesPark")
+public class BasketSamplesPark extends AutoBase {
     @Override
     public Action getAction() {
         Pose2d basket = new Pose2d(62, 66, Math.PI / 4);
@@ -39,16 +41,22 @@ public abstract class BasketPark extends AutoBase {
                                                 .strafeToConstantHeading(new Vector2d(basket.position.x, 27)) // position third
                                                 .strafeToLinearHeading(new Vector2d(72.5, 28), 0) // get third
                                                 .strafeTo(new Vector2d(70, 63)) // push third
-                                                .strafeTo(new Vector2d(-44, 63)) // park */
+                                                .strafeTo(new Vector2d(70, 63-12))
+                                                .strafeTo(new Vector2d(-44, 63-12))
+                                                .strafeTo(new Vector2d(-44, 63)) // park
                                                 .build()
-                        ),
-                    this.intake.setPower(Constants.INTAKE_OUT_POWER)
-                )
+                                ),
+                                this.intake.setPower(Constants.INTAKE_OUT_POWER)
+                        )
                 )
         );
         return new ParallelAction(
                 this.arm.pidUpdateAction(),
                 driveAction
         );
+    }
+
+    public Pose2d getStartingPose() {
+        return new Pose2d(new Vector2d(24, 62), -Math.PI / 2);
     }
 }

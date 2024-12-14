@@ -15,7 +15,7 @@ public class Constants {
     // Arm Constants
     public static final String ARM_KEY = "arm";
     public static final int ARM_UP_POS = -800;
-    public static final int ARM_DOWN_POS = -1800;
+    public static final int ARM_DOWN_POS = -1870;
     public static final int ARM_NEUTRAL_POS = -420;
     public static final double ARM_KP = 0.001;
     public static final double ARM_KI = 0.004;
